@@ -1,15 +1,36 @@
 # Financial Data Quality Lab
 
-Reproducible research into deterministic validation of synthetic accounts-payable data, including invoice duplicates, date anomalies, missing fields, VAT and amount discrepancies.
+Reproducible, open-source experiments with deterministic data-quality checks for **synthetic accounts-payable invoices**.
 
 ## Research question
-How effectively can transparent validation rules identify data-quality issues in financial transactions?
 
-## Status
-Initial repository setup. The complete Python prototype, tests, synthetic data, documentation, and CI workflow are available in the project starter archive and will be proposed through a review branch.
+How reliably do transparent validation rules identify intentionally labeled invoice defects in a controlled synthetic dataset?
 
-## Data policy
-Use only synthetic or explicitly authorized, properly anonymized data. Never commit employer, supplier, customer, or financial secrets.
+## Current implementation
 
-## Planned reproducibility
-Python package, CLI, CSV/JSON outputs, pytest suite, documented methodology, and GitHub Actions checks.
+- Python validator: required identifiers, duplicate supplier/invoice keys, ISO dates, due-date ordering, invalid numeric amounts and subtotal/VAT/total reconciliation
+- Eight-row labeled synthetic benchmark with row-rule ground truth
+- Precision, recall, false-positive rate and confusion counts per rule
+- Automated pytest suite and GitHub Actions workflow
+
+**Status:** early research prototype. The benchmark is hand-constructed and cannot establish accuracy on real-world accounting data.
+
+## Reproduce
+
+Requires Python 3.10+.
+
+```bash
+python -m pip install -e '.[test]'
+python -m pytest -q
+python -m financial_data_quality_lab.benchmark --input data/benchmark_invoices.csv --output benchmark-results.json
+```
+
+Read [benchmark methodology](docs/benchmark.md) and [research methodology](docs/methodology.md).
+
+## Research integrity
+
+Only fictional records are included. No confidential financial information, employer records, or supplier/customer data may be committed. Flags require human review before financial decisions. The validator checks arithmetic consistency of VAT amounts, **not** VAT-rate compliance.
+
+## Roadmap
+
+Expand edge-case coverage, validate labels independently, evaluate a larger held-out synthetic dataset and add clear CSV/JSON exception reports.
