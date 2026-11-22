@@ -1,19 +1,21 @@
 # Financial Data Quality Lab
 
-Reproducible, open-source experiments with deterministic data-quality checks for **synthetic accounts-payable invoices**.
+Reproducible applied research into **synthetic accounts-payable data quality, invoice/payment reconciliation, and auditable controls**.
 
 ## Research question
 
-How reliably do transparent validation rules identify intentionally labeled invoice defects in a controlled synthetic dataset?
+How consistently do transparent accounting validation rules detect labeled exceptions in a controlled synthetic invoice/payment/ledger dataset?
 
-## Current implementation
+## v0.2 — active benchmark
 
-- Python validator: required identifiers, duplicate supplier/invoice keys, ISO dates, due-date ordering, invalid numeric amounts and subtotal/VAT/total reconciliation
-- Eight-row labeled synthetic benchmark with row-rule ground truth
-- Precision, recall, false-positive rate and confusion counts per rule
-- Automated pytest suite and GitHub Actions workflow
+- **120 fictional records**, 10 documented controls, 1,200 row-rule opportunities
+- Invoice duplicate, missing field, date, monetary arithmetic and illustrative VAT checks
+- Payment amount reconciliation and missing payment/ledger reference controls
+- Per-rule and micro-averaged precision, recall, F1 and false-positive rate
+- Deterministic JSON, CSV and Markdown research reports
+- Automated tests and GitHub Actions
 
-**Status:** early research prototype. The benchmark is hand-constructed and cannot establish accuracy on real-world accounting data.
+The fixture is intentionally constructed to match the controls. Even if all test cases pass, **this does not establish real-world detection accuracy, tax compliance, fraud detection or audit assurance**.
 
 ## Reproduce
 
@@ -22,15 +24,17 @@ Requires Python 3.10+.
 ```bash
 python -m pip install -e '.[test]'
 python -m pytest -q
-python -m financial_data_quality_lab.benchmark --input data/benchmark_invoices.csv --output benchmark-results.json
+python -m financial_data_quality_lab.controls_v02 --input data/benchmark_v02.csv --output-dir reports/v02
 ```
 
-Read [benchmark methodology](docs/benchmark.md) and [research methodology](docs/methodology.md).
+Reports are written to `reports/v02/metrics.json`, `findings.csv`, and `results.md`.
+
+Read the [v0.2 benchmark protocol](docs/benchmark_v02.md), [v0.1 benchmark](docs/benchmark.md), and [research methodology](docs/methodology.md).
 
 ## Research integrity
 
-Only fictional records are included. No confidential financial information, employer records, or supplier/customer data may be committed. Flags require human review before financial decisions. The validator checks arithmetic consistency of VAT amounts, **not** VAT-rate compliance.
+All data is fictional. Do not upload confidential employer, supplier, customer or financial records. The illustrative 5% VAT assumption is **not a compliance engine**. Findings require human review before accounting or financial decisions.
 
 ## Roadmap
 
-Expand edge-case coverage, validate labels independently, evaluate a larger held-out synthetic dataset and add clear CSV/JSON exception reports.
+Independently labeled held-out datasets, credit notes, partial payments, bank-ledger matching, configurable tax assumptions, and robustness evaluation.
