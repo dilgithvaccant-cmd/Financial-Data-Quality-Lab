@@ -1,0 +1,8 @@
+document_id,rule
+D005,missing_ledger
+D006,ledger_mismatch
+D007,missing_payment
+D008,overpayment
+D009,duplicate_payment
+D010,unbalanced_settlement
+D018,credit_note_mismatch

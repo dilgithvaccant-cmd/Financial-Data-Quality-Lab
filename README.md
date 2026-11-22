@@ -1,40 +1,36 @@
 # Financial Data Quality Lab
 
-Reproducible applied research into **synthetic accounts-payable data quality, invoice/payment reconciliation, and auditable controls**.
+Reproducible applied research using **fictional accounts-payable invoices, payments and ledger records**.
 
-## Research question
+## v0.3 — audit reconciliation research prototype
 
-How consistently do transparent accounting validation rules detect labeled exceptions in a controlled synthetic invoice/payment/ledger dataset?
+- A separate 28-document synthetic evaluation fixture with seven scenario-authored exception labels
+- Three-way document/payment/ledger amount and reference matching
+- Credit notes, partial payments, overpayments and duplicate payment IDs
+- Severity-tagged exceptions and traceable document/payment/ledger evidence
+- Precision, recall and F1 at document-rule level
+- Deterministic CSV, JSON and Markdown reports with input SHA-256 hashes
 
-## v0.2 — active benchmark
-
-- **120 fictional records**, 10 documented controls, 1,200 row-rule opportunities
-- Invoice duplicate, missing field, date, monetary arithmetic and illustrative VAT checks
-- Payment amount reconciliation and missing payment/ledger reference controls
-- Per-rule and micro-averaged precision, recall, F1 and false-positive rate
-- Deterministic JSON, CSV and Markdown research reports
-- Automated tests and GitHub Actions
-
-The fixture is intentionally constructed to match the controls. Even if all test cases pass, **this does not establish real-world detection accuracy, tax compliance, fraud detection or audit assurance**.
+**Important:** Labels are maintained in a separate file, but were created from known synthetic scenarios; they are **not independently adjudicated by external reviewers**. This project does not establish real-world accuracy, audit assurance or fraud detection.
 
 ## Reproduce
 
-Requires Python 3.10+.
+Python 3.10+:
 
 ```bash
 python -m pip install -e '.[test]'
 python -m pytest -q
-python -m financial_data_quality_lab.controls_v02 --input data/benchmark_v02.csv --output-dir reports/v02
+python -m financial_data_quality_lab.reconciliation_v03 --data-dir data/v03 --output-dir reports/v03
 ```
 
-Reports are written to `reports/v02/metrics.json`, `findings.csv`, and `results.md`.
+Reports: `reports/v03/audit_evidence.json`, `exceptions.csv`, `research_report.md`.
 
-Read the [v0.2 benchmark protocol](docs/benchmark_v02.md), [v0.1 benchmark](docs/benchmark.md), and [research methodology](docs/methodology.md).
+Read the [v0.3 research protocol](docs/benchmark_v03.md). The [v0.2 benchmark](docs/benchmark_v02.md) and original [methodology](docs/methodology.md) remain available.
 
 ## Research integrity
 
-All data is fictional. Do not upload confidential employer, supplier, customer or financial records. The illustrative 5% VAT assumption is **not a compliance engine**. Findings require human review before accounting or financial decisions.
+Only synthetic records. No confidential employer, supplier, customer, bank or personal records. Human review is required before accounting decisions. The example does not verify actual payment settlement, bank statements or tax compliance.
 
 ## Roadmap
 
-Independently labeled held-out datasets, credit notes, partial payments, bank-ledger matching, configurable tax assumptions, and robustness evaluation.
+Independent blinded annotation, broader adverse scenarios, settlement aging, credit-note allocation, balanced double-entry checks and cross-currency reconciliation.
